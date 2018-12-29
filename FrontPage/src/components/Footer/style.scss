@@ -1,0 +1,55 @@
+a {
+    color: white;
+}
+
+a:hover{
+    color: rgba(0, 188, 212, 0.7);
+}
+
+.title{
+    margin-bottom: 1rem;
+    width:  100%;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    font:       normal normal 900 18px/normal 'Unlock', Helvetica, sans-serif;
+}
+
+.contacts{
+    padding: 0.5rem 0 2rem 4rem;
+
+    .entry{
+        display:flex;
+        align-items: space-between;
+        justify-content: flex-start;
+        margin-top: 1rem;
+    }
+}
+
+
+.icon{
+    margin-top:0.3rem;
+}
+
+.followMe{
+    padding: 0.5rem 2rem 2rem 0;
+    .entry{
+        display:flex;
+        align-items: space-between;
+        justify-content: flex-start;
+        margin-top: 1rem;
+        margin-left: 10rem;
+    }
+    .social_media{
+        display:flex;
+        align-items: stretch;
+        justify-content: flex-start;
+        margin-top: 1rem;
+        margin-left: 8rem;
+        .icon{
+            margin-top:0.3rem;
+            margin-right:0.5rem;
+        }
+    }
+    
+}
