@@ -4,7 +4,7 @@ import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 
 import style from "./navbar-style.scss";
-import logo from "../../assests/logo.png";
+import logo from "../../../public/resources/FrontPage/static/logo.png";
 
 
 import {  Navbar, NavbarBrand, NavbarNav, NavItem, NavLink, Fa,

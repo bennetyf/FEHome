@@ -1,18 +1,26 @@
 import React from 'react';
 import style from "./style.scss";
+import dynamic from 'umi/dynamic';
+import 'font-awesome/css/font-awesome.min.css';
+import 'bootstrap-css-only/css/bootstrap.min.css'; 
+import 'mdbreact/dist/css/mdb.css';
 
 import {MDBBtn, Container, Modal, ModalBody, ModalHeader, ModalFooter} from 'mdbreact';
 
-export default (props)=>(
+
+export default dynamic ({
+    loading: ()=>null,
+
+    loader:async ()=>(props)=>(
     <Container className={style.modal}>
-        <Modal isOpen={props.register.modal} toggle={props.registerHandleToggle} centered>
+        <Modal isOpen={props.register.modal} toggle={props.registerHandleToggle} backdrop={false} centered>
             <ModalHeader toggle={props.registerHandleToggle}>
                 <span className="font-weight-bold">Register A New User</span>
             </ModalHeader>
-            
+
             <form onSubmit={(evt)=>{evt.preventDefault();props.registerHandleSubmit(props.register)}}>
                 <ModalBody className={style.modalbody}>
-                    <label for="email">
+                    <label className={style.textlabel}>
                         <span>Email:</span>
                         <br/>
                             
@@ -34,7 +42,7 @@ export default (props)=>(
                         {props.register.formErrors.email}
                     </div>
                     <br/>
-                    <label for="username">
+                    <label className={style.textlabel}>
                         <span>Username:</span>
                         <br/>
 
@@ -42,6 +50,7 @@ export default (props)=>(
                             type="text"
                             id ="username"
                             name="username"
+                            autoComplete="username"
                             placeholder="Username"
                             value={props.register.username}
                             onChange={props.registerHandleChange}
@@ -57,7 +66,7 @@ export default (props)=>(
                     </div>
 
                     <br/>
-                    <label for="pwd">
+                    <label className={style.textlabel}>
                         <span>Password:</span>
                         <br/>
 
@@ -65,6 +74,7 @@ export default (props)=>(
                             type="password"
                             id="pwd"
                             name="password"
+                            autoComplete="current-password"
                             placeholder="Password"
                             value={props.register.password}
                             onChange={props.registerHandleChange}
@@ -82,11 +92,12 @@ export default (props)=>(
                 </ModalBody>
 
                 <ModalFooter className={style.modalfooter}>
-                        <MDBBtn color="primary" type="submit" size="sm" disabled={props.register.isSubmitDisabled}><span>SignUp</span></MDBBtn>
-                        <MDBBtn color="secondary" onClick={props.registerHandleToggle} size="sm"><span>Cancel</span></MDBBtn>
+                    <MDBBtn color="primary" type="submit" size="sm" disabled={props.register.isSubmitDisabled}><span>SignUp</span></MDBBtn>
+                    <MDBBtn color="secondary" onClick={props.registerHandleToggle} size="sm"><span>Cancel</span></MDBBtn>
                 </ModalFooter>
 
             </form>
         </Modal>
     </Container>
+    )}
 );

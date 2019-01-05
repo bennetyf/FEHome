@@ -3,9 +3,9 @@ import request from '../utils/ajax';
 import qs from 'querystring';
 // import {push} from 'react-router-redux';
 
-const loginUrl = 'http://localhost:8080/login/logincheck';
-const api_header = {"Accept": "application/json","Content-Type":'application/x-www-form-urlencoded'};
-const registerUrl = 'http://localhost:8080/login/submit';
+const loginUrl = 'http://localhost:8080/EMS/login';
+const api_header = {"Accept": "application/json","Content-Type":"application/x-www-form-urlencoded"};
+const registerUrl = 'http://localhost:8080/EMS/register';
 
 export default {
     state:{
@@ -16,6 +16,8 @@ export default {
             password:'',
             rememberme:false
         },
+
+        token:'',
 
         registerStatus:'',
 
@@ -38,7 +40,8 @@ export default {
         //Query the LoginStatus(Login Check is Performed by Backend APIs)
         *queryLoginStatus({payload:pld}, {call,put}){
             const {username, password, rememberme} = pld;
-            const loginStatus = yield call(request,
+
+            const loginResponse = yield call(request,
                 'POST',
                 loginUrl,
                 {headers:api_header,
@@ -46,18 +49,22 @@ export default {
             // if(loginStatus.result === 'Success'){
             //     yield put(push('/EMS/homepage')); //An effecient way to deal with redirect with ajax result
             // }else{
-                yield put({type:'changeLoginStatus', payload:loginStatus.result});
+                yield put({type:'changeLoginStatus', payload:loginResponse.data.result});
+                if(loginResponse.headers.hasOwnProperty('X-Authorization')){
+                    yield put({type:'changeToken', payload:loginResponse.headers['X-Authorization']})
+                }
             // }
         },
 
         *insertNewAccount({payload:pld},{call,put}){
-            const {username, password} = pld;
-            const registerStatus = yield call(request,
+            const {email,username,password} = pld;
+            const registerResponse = yield call(request,
                 'POST',
                 registerUrl,
                 {headers:api_header,
-                data:qs.stringify({username,password})});
-            yield put({type:'changeRegisterStatus', payload:registerStatus.result});
+                data:qs.stringify({email,username,password})});
+
+            yield put({type:'changeRegisterStatus', payload:registerResponse});
         }
     },
 
@@ -66,16 +73,16 @@ export default {
         changeLoginStatus(state,{payload:pld}){
             return produce(state,(draft)=>{
                 switch(pld){
-                    case 'Success':
+                    case 'success':
                         draft.loginStatus = pld;
                         break;
-                    case 'NoSuchUser':
+                    case 'no such user':
                         draft.loginStatus = 'User Has Not Been Registered';
                         break;
-                    case 'WrongPassword':
+                    case 'bad credentials':
                         draft.loginStatus = 'The Password is Wrong. Please Check Your Input.';
                         break;
-                    case 'UnknownError':
+                    case 'internal error':
                         draft.loginStatus = 'Username or Password May Be Wrong';
                         break;
                     default:
@@ -91,6 +98,13 @@ export default {
                     draft.loginStatus = '';
                 }
                 draft.loginData[pld.name] = pld.value;
+                return draft;
+            })
+        },
+
+        changeToken(state,{payload:pld}){
+            return produce(state, (draft)=>{
+                draft.token = pld;
                 return draft;
             })
         },
@@ -187,23 +201,18 @@ export default {
             })
         },
 
-        changeRegisterStatus(state,{payload:pld}){
+        changeRegisterStatus(state,{payload:response}){
+            const {data, headers} = response;
+            const {result, email, username, password} = data;
             return produce(state,(draft)=>{
-                switch(pld){
-                    case 'Success':
-                        draft.registerStatus = pld;
-                        break;
-                    case 'UserExists':
-                        draft.registerStatus = 'User Has Already Been Registered';
-                        break;
-                    case 'UnknownError':
-                        draft.registerStatus = 'Unknown Error';
-                        break;
-                    default:
-                        draft.registerStatus = 'Unknown Error';
+                draft.registerStatus = result;
+                if(result === 'error'){
+                    draft.registerData.formErrors = {email,username,password}
+                }else if(headers.hasOwnProperty('X-Authorization')){
+                    draft.token = headers['X-Authorization'];
                 }
                 return draft;
-            })
+            });
         },
     }
 }

@@ -13,7 +13,7 @@ const mapStateToProps = (state) => {
     return {
         loginStatus: allState.loginStatus,
         login:{
-            ...allState.loginData
+            ...allState.loginData,
         },
 
         registerStatus: allState.registerStatus,
@@ -49,6 +49,7 @@ const mapDispatchToProps = (dispatch) => {
                 type:`${namespace}/toggleRegister`
             })
         },
+        
         registerHandleChange: (evt)=>{
             let payload = {
                 name: evt.target.name,
@@ -74,6 +75,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch({
                 type:`${namespace}/insertNewAccount`,
                 payload:{
+                    email: registerData.email,
                     username:registerData.username,
                     password:registerData.password
                 }
@@ -90,10 +92,10 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const Response = (props) => {
-    if(props.loginStatus === 'Success'){
+    if(props.loginStatus === 'success'){
         // props.history.push('/EMS/homepage');
         return <Redirect to={{pathname:'/EMS/homepage',state:{text:"Logged In"}}} push />;
-    }else if(props.registerStatus === 'Success'){
+    }else if(props.registerStatus === 'success'){
         return <Redirect to={{pathname:'/EMS/homepage',state:{text:"New User Registered"}}} push />;
     }else{
         return null;

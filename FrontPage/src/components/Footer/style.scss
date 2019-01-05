@@ -1,9 +1,9 @@
 a {
-    color: white;
+    color: white !important;
 }
 
 a:hover{
-    color: rgba(0, 188, 212, 0.7);
+    color: rgba(0, 188, 212, 0.7) !important;
 }
 
 .title{
@@ -18,11 +18,16 @@ a:hover{
 .contacts{
     padding: 0.5rem 0 2rem 4rem;
 
-    .entry{
-        display:flex;
-        align-items: space-between;
-        justify-content: flex-start;
-        margin-top: 1rem;
+    .innerbox{
+        margin:auto;
+        width:60%;
+
+        .entry{
+            display:flex;
+            align-items: space-between;
+            justify-content: flex-start;
+            margin-top: 1rem;
+        }
     }
 }
 
@@ -33,23 +38,25 @@ a:hover{
 
 .followMe{
     padding: 0.5rem 2rem 2rem 0;
-    .entry{
-        display:flex;
-        align-items: space-between;
-        justify-content: flex-start;
-        margin-top: 1rem;
-        margin-left: 10rem;
-    }
-    .social_media{
-        display:flex;
-        align-items: stretch;
-        justify-content: flex-start;
-        margin-top: 1rem;
-        margin-left: 8rem;
-        .icon{
-            margin-top:0.3rem;
-            margin-right:0.5rem;
+
+    .innerbox{
+        margin:auto;
+        width:30%;
+        .entry{
+            display:flex;
+            align-items: space-between;
+            justify-content: flex-start;
+            margin-top: 1rem;
+        }
+        .social_media{
+            display:flex;
+            align-items: stretch;
+            justify-content: flex-start;
+            margin-top: 1rem;
+            .icon{
+                margin-top:0.3rem;
+                margin-right:0.5rem;
+            }
         }
     }
-    
 }

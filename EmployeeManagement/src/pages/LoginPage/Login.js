@@ -2,6 +2,7 @@ import React from 'react';
 import style from "./style.scss";
 
 import {MDBBtn} from 'mdbreact';
+// import {Checkbox} from 'antd';
 
 export default (props)=>(
     <div className={style.login_block}>
@@ -16,10 +17,11 @@ export default (props)=>(
                         type="text" 
                         id ="username"
                         name="username"
+                        autoComplete="username"
                         placeholder="Name..."
                         value={props.login.username}
                         onChange={props.loginHandleChange}
-                        className={(props.loginStatus === '' || props.loginStatus === 'Success')?
+                        className={(props.loginStatus === '' || props.loginStatus === 'success')?
                             style.inputDefault:
                             style.inputInvalid}
                     />
@@ -37,14 +39,14 @@ export default (props)=>(
                             autoComplete="current-password"
                             value={props.login.password}
                             onChange={props.loginHandleChange}
-                            className={(props.loginStatus === '' || props.loginStatus === 'Success')?
+                            className={(props.loginStatus === '' || props.loginStatus === 'success')?
                                 style.inputDefault:
                                 style.inputInvalid}
                         />
                     </label>
                     <br/>
 
-                    <div className={(props.loginStatus === '' || props.loginStatus === 'Success')?
+                    <div className={(props.loginStatus === '' || props.loginStatus === 'success')?
                                     style.valid:style.invalid}>
                         {props.loginStatus}
                     </div>
@@ -54,10 +56,10 @@ export default (props)=>(
                     <label className={style.checkboxlabel}>
                      <div>
                         <input 
-                            type="checkbox"
-                            name="rememberme"
-                            checked={props.login.rememberme}
-                            onChange={props.loginHandleChange}
+                                type="checkbox"
+                                name="rememberme"
+                                checked={props.login.rememberme}
+                                onChange={props.loginHandleChange}
                         />
                         <span>Remember Me</span>
                      </div>

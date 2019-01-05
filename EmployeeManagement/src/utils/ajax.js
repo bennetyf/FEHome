@@ -9,6 +9,6 @@ export default (method,url,option={}) => {
     };
 
     return axios(config)
-            .then(res=>res.data)
+            .then(res=>({data:res.data,headers:res.headers}))
             .catch((error)=>{console.log(error)});
 }
