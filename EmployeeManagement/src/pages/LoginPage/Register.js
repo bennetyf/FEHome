@@ -5,8 +5,11 @@ import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css'; 
 import 'mdbreact/dist/css/mdb.css';
 
-import {MDBBtn, Container, Modal, ModalBody, ModalHeader, ModalFooter} from 'mdbreact';
+import {Container, Modal, ModalBody, ModalHeader, ModalFooter} from 'mdbreact';
 
+import {Input, Icon, Button} from 'antd';
+
+// import MyInput from './Input';
 
 export default dynamic ({
     loading: ()=>null,
@@ -20,82 +23,93 @@ export default dynamic ({
 
             <form onSubmit={(evt)=>{evt.preventDefault();props.registerHandleSubmit(props.register)}}>
                 <ModalBody className={style.modalbody}>
-                    <label className={style.textlabel}>
-                        <span>Email:</span>
-                        <br/>
-                            
-                        <input
-                            type="email"
-                            id ="email"
-                            name="email"
-                            placeholder="address@example.com"
-                            value={props.email}
-                            onChange={props.registerHandleChange}
-                            className={props.register.formIsFirst.email?
-                                        null:
-                                        (props.register.formValidity.email?
-                                        null:
-                                        style.inputInvalid)}
-                        />
-                    </label>
-                    <div className={props.register.formValidity.email?style.valid:style.invalid}>
+                    {/* <label htmlFor="myinput">MyInput</label>
+                    <MyInput 
+                        id="myinput"
+                        type="text"
+                        // prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.5)' }} />}
+                    /> */}
+
+                    <label className={style.textlabel} htmlFor="email">Email:</label>
+                    <Input
+                        type="email"
+                        name="email"
+                        id="email"
+                        placeholder="address@example.com"
+                        size="large"
+                        prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.5)' }} />}
+                        value={props.register.email}
+                        onChange={props.registerHandleChange}
+                        onFocus={(evt)=>props.registerHandleFocusState(evt,true)}
+                        onBlur={(evt)=>props.registerHandleFocusState(evt,false)}
+                        className={!props.register.isSubmitDisabled && !props.register.formValidity.email && !props.register.isOnFocus.email?
+                                    style.inputInvalid:
+                                    null}
+                        addonAfter={<Icon type="close-circle" onClick={props.registerClearEmail}/>}
+                    />                
+                    <p className={props.register.formValidity.email?style.valid:style.invalid}>
                         {props.register.formErrors.email}
-                    </div>
-                    <br/>
-                    <label className={style.textlabel}>
-                        <span>Username:</span>
-                        <br/>
-
-                        <input 
-                            type="text"
-                            id ="username"
-                            name="username"
-                            autoComplete="username"
-                            placeholder="Username"
-                            value={props.register.username}
-                            onChange={props.registerHandleChange}
-                            className={props.register.formIsFirst.username?
-                                        null:
-                                        (props.register.formValidity.username?
-                                        null:
-                                        style.inputInvalid)}
-                        />
-                    </label>
-                    <div className={props.register.formValidity.username?style.valid:style.invalid}>
+                    </p>
+                    
+                    <label className={style.textlabel} htmlFor="reg_username">Username:</label>
+                    <Input
+                        type="text"
+                        name="username"
+                        id="reg_username"
+                        placeholder="Username"
+                        size="large"
+                        prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.5)' }} />}
+                        value={props.register.username}
+                        onChange={props.registerHandleChange}
+                        onFocus={(evt)=>props.registerHandleFocusState(evt,true)}
+                        onBlur={(evt)=>props.registerHandleFocusState(evt,false)}
+                        className={!props.register.isSubmitDisabled && !props.register.formValidity.username && !props.register.isOnFocus.username?
+                                    style.inputInvalid:
+                                    null}
+                        addonAfter={<Icon type="close-circle" onClick={props.registerClearUsername}/>}
+                    />
+                        
+                    <p className={props.register.formValidity.username?style.valid:style.invalid}>
                         {props.register.formErrors.username}
-                    </div>
+                    </p>
 
-                    <br/>
-                    <label className={style.textlabel}>
-                        <span>Password:</span>
-                        <br/>
-
-                        <input 
-                            type="password"
-                            id="pwd"
-                            name="password"
-                            autoComplete="current-password"
-                            placeholder="Password"
-                            value={props.register.password}
-                            onChange={props.registerHandleChange}
-                            className={props.register.formIsFirst.password?
-                                    null:
-                                    (props.register.formValidity.password?
-                                    null:
-                                    style.inputInvalid)}
-                        />
-                    </label>
-                    <div className={props.register.formValidity.password?style.valid:style.invalid}>
+                    <label className={style.textlabel} htmlFor="password">Password:</label>
+                    <Input
+                        type="password"
+                        name="password"
+                        id="password"
+                        placeholder="Password"
+                        size="large"
+                        prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.5)' }} />}
+                        value={props.register.password}
+                        onChange={props.registerHandleChange}
+                        onFocus={(evt)=>props.registerHandleFocusState(evt,true)}
+                        onBlur={(evt)=>props.registerHandleFocusState(evt,false)}
+                        className={!props.register.isSubmitDisabled && !props.register.formValidity.password && !props.register.isOnFocus.password?
+                                    style.inputInvalid:
+                                    null}
+                        addonAfter={<Icon type="close-circle" onClick={props.registerClearPassword}/>}
+                    />
+                    <p className={props.register.formValidity.password?style.valid:style.invalid}>
                         {props.register.formErrors.password}
-                    </div>
+                    </p>
 
                 </ModalBody>
 
                 <ModalFooter className={style.modalfooter}>
-                    <MDBBtn color="primary" type="submit" size="sm" disabled={props.register.isSubmitDisabled}><span>SignUp</span></MDBBtn>
-                    <MDBBtn color="secondary" onClick={props.registerHandleToggle} size="sm"><span>Cancel</span></MDBBtn>
+                    <Button type="primary" 
+                        disabled={props.register.isSubmitDisabled}
+                        loading={props.register.loadingStatus}
+                        onClick={(evt)=>{evt.preventDefault();props.registerHandleSubmit(props.register)}}
+                        className={style.button}> 
+                        Submit
+                    </Button>
+                    
+                    <Button type="danger" onClick={props.registerHandleToggle} className={style.button}>
+                        Cancel
+                    </Button>
                 </ModalFooter>
-
+                <input type="submit" style={{display:`none`}}/>
             </form>
         </Modal>
     </Container>

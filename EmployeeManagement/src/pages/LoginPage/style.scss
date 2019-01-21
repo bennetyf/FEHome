@@ -39,30 +39,27 @@ video{
             justify-content: center;
 
             form{
-                margin-top:6rem;
+                margin-top:4rem;
                 padding-left:15%;
                 padding-right:15%;
                 height:auto;
                 width:100%;
                 
                 .invalid{
-                    width:100%;
-                    color:cyan;
-                    font-size: 0.8rem;
+                    width: 100%;
+                    color:red;
+                    font-size: 0.85rem;
                     font-weight: bold;
-                    height:0.8rem;
+                    height:1.5rem;
                     margin-bottom:0;
                     visibility: visible;
                 }
+
                 .valid{
                     width:100%;
-                    height:0.8rem;
+                    height:1.5rem;
                     margin-bottom:0;
                     visibility: hidden;
-                }
-                .inputInvalid{
-                    width:100%;
-                    border:cyan solid 2px;
                 }
 
                 .textlabel{
@@ -71,99 +68,154 @@ video{
                     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
                     font-size: 1.5rem;
                 }
+
                 .inputDefault{
-                    width:100%;
+                    position:relative;
+                    flex:1 1 auto;
+                    width: 1%;
+                    margin-bottom:0;
+                    display:block;
+                    height: calc(2.5rem + 2px);
+                    padding:.375rem .75rem;
+                    font-size:1rem;
+                    line-height:1.5;
+                    color: #495057;
+                    background-color: #fff;
+                    background-clip: padding-box;
+                    border: 2px solid #ced4da;
+                    border-radius:0 .25rem .25rem 0;
+                    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
                 }
 
-                .checkboxlabel{
+                .inputInvalid{
+                    @extend .inputDefault;
+                    &:focus{
+                        outline:none;
+                        box-shadow: none;
+                    }
+                    border:red solid .2rem;
+                }
+
+                .annotation{
                     width:100%;
-                    margin:0;
+                    height:auto;
+                    margin-top:1.5rem;
+
+                    display:flex;
+                    @media screen and (min-width: 768px){
+                        flex-direction: column;
+                    }
+                    justify-content: space-between;
+                    align-items: center;
+                    @media screen and (min-width:1920px){
+                        flex-direction: row;
+                    }
+                    
+                    color:white;
                     font-weight:bold;
                     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-                    font-size: 1.5rem;
+                    font-size: 1.2rem;
 
-                    // input[type="checkbox"]{
-                    //     visibility: hidden;
-                    // }
-                    input[type="checkbox"]{
-                        width:1.2rem;
-                        height:1.2rem;
-                        cursor:pointer;
-                        // background:transparent;
-                        // &:hover{
-                            // border: #1890ff 3px solid;
-                        // }
-                    }
-                    div {
+                    .rememberMeWrapper{
+                        @media (min-width:768px){
+                            margin-bottom:1.2rem;
+                        }
+                        @media (min-width:1920px){
+                            margin-bottom:0;
+                        }
                         display:flex;
-                        align-items: center;
-                        justify-content: center;
+                        align-items:center;
+
+                        label{
+                            color:white;
+                            font-weight:bold;
+                            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+                            font-size: 1.2rem;
+                        }
                     }
-                    span{
-                        margin-left:8px;
-                    }
+    
+                    // .forgetPwdWrapper{
+                    //     .forgetPwdLabel{
+                    //         // color: #495057 !important;
+                    //         font-weight:bold;
+                    //         font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+                    //         font-size: 1.2rem;
+                    //     }
+                    // }
                 }
-                .formbutton{
-                    width:100%;
-                    margin-top:2rem;
+            }
+        }
+
+        .formbutton{
+                width:100%;
+                margin-top:2rem;
                     // display:flex;
                     // justify-content:space-evenly;
                     // align-items:center;
-                    .leftbutton{
-                        float:left;
-                    }
-                    .rightbutton{
-                        float:right;
-                    }
+                @media screen and (min-width:768px){
                     span{
                         font-size:1.25rem;
+                    }
+                    .leftbutton{
+                        width:100%;
+                        border-radius:.75rem;
+                        margin-bottom: 1rem;
+                    }
+                    .rightbutton{
+                        width:100%;
+                        border-radius:.75rem;
+                    }
+
+                    @media (min-width:1920px){
+                        .leftbutton{
+                            width:40%;
+                            float:left;
+                            border-radius:.75rem;
+                        }
+                        .rightbutton{
+                            width:40%;
+                            float:right;
+                            border-radius:.75rem;
+                        } 
                     }
                 }
             }
         }
     }
-}
 
 .modal{
     .modalbody{
         width:80%;
         margin:auto;
-        label{
-            margin-bottom:0.8rem;
+        .textlabel{
+            margin-bottom:0.25rem;
             width:100%;
             font-family: Verdana, Geneva, Tahoma, sans-serif;
             font-size: 1.25rem;
         }
-        input{
-            width:100%;
-            margin-bottom:0;
-        }
-        // span{
-        //     font-size:1.2rem;
-        //     font-family: Verdana, Geneva, Tahoma, sans-serif;
-        // }
         .invalid{
             color:red;
-            font-size: 0.9rem;
-            height:1rem;
+            margin:0;
+            font-size: 0.85rem;
+            height:1.5rem;
             visibility: visible;
         }
         .valid{
-            height:1rem;
+            height:1.5rem;
+            margin:0;
             visibility: hidden;
         }
         .inputInvalid{
-            border:red solid 3px;
-            &:focus{
-                outline:none;
-                box-shadow:none;
-            }
+            border:red solid 2px;
+            border-top-left-radius: 6px;
+            border-bottom-left-radius: 6px;
         }
     }
     .modalfooter{
-        span{
-            font-size:1.25rem;
-            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        .button{
+            border-radius: .75rem;
+            font-size: 1.25rem;
+            text-align: center;
         }
     }
 }

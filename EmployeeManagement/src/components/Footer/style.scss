@@ -1,11 +1,3 @@
-a {
-    color: white !important;
-}
-
-a:hover{
-    color: rgba(0, 188, 212, 0.7) !important;
-}
-
 .title{
     margin-bottom: 1rem;
     width:  100%;
@@ -41,7 +33,7 @@ a:hover{
 
     .innerbox{
         margin:auto;
-        width:30%;
+        width:35%;
         .entry{
             display:flex;
             align-items: space-between;
@@ -50,7 +42,7 @@ a:hover{
         }
         .social_media{
             display:flex;
-            align-items: stretch;
+            align-items: center;
             justify-content: flex-start;
             margin-top: 1rem;
             .icon{

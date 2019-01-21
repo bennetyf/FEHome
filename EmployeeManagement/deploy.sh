@@ -5,7 +5,7 @@ echo "Deploying..."
 dst_root=/media/work/Workspace/Personal_Projects/ProjFS/BE_EMS/src/webapp
 dst_fld=${dst_root}/resources/EMS
 dst_static=${dst_root}/resources/EMS/static
-dst_view=${dst_root}/Views/EMS
+dst_view=${dst_root}/Views/EMS/Login
 
 src=./dist
 

@@ -1,0 +1,52 @@
+
+.my_input_wrapper{
+    display:block;
+    position:relative;
+    height: calc(2.5rem + 2px);
+    border:none;
+    outline:none;
+
+    .my_input_inner{
+        margin:0;
+        padding:.375rem .75rem;
+        font-size:1rem;
+        line-height:1.5;
+        color: #495057;
+        outline:none;
+        background-color: transparent;
+        background-clip: padding-box;
+        border: 2px solid #ced4da;
+        border-radius:.35rem .35rem .35rem .35rem;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        
+        position: absolute;
+        left:0;
+        top:0;
+        
+        height:2.5rem;
+        width:100%;
+
+        text-indent:.15rem;
+
+        &:hover{
+            border-color: #00bcd4;
+            box-shadow:0 0 12px #00bcd4;
+        }
+
+        &:focus{
+            border-color: #00bcd4;
+            box-shadow:none;
+        }
+    }
+
+    .my_input_inner_prefix{
+        text-indent:1.125rem;
+    }
+
+
+    .input_prefix{
+        position:absolute;
+        left:1rem;
+        top:calc(.375rem + 1px);
+    }
+}

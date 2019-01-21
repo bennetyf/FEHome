@@ -1,6 +1,6 @@
 const path = require('path');
 import pageRoutes from './config.routes';
-
+import defaultSettings from '../src/defaultSettings';
 // Extract the CSS File as an independent file and rename the file name using hashcode
 const ExtCss = require('mini-css-extract-plugin');
 const extcssplugin = new ExtCss({filename:'bundle.min.css'});
@@ -26,7 +26,13 @@ export default {
             ],
 
     routes: pageRoutes,
+    
+    theme: {
+        'primary-color': defaultSettings.primaryColor,
+    },
+
     publicPath: '/resources/FrontPage/',
+    
     chainWebpack: (config,{webpack})=>{
         config.output
                     .filename('bundle.min.js')

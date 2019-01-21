@@ -16,6 +16,8 @@ export default {
             password:'',
             rememberme:false
         },
+        
+        loginButtonType:'home',
 
         token:'',
 
@@ -32,13 +34,19 @@ export default {
 
             formErrors:{email:'',username: '',password: ''},
             formIsFirst:{email:true,username: true,password: true},
-            formValidity:{email:false,username: false,password:false}
+            formValidity:{email:false,username: false,password:false},
+
+            isOnFocus: {email:false,username:false,password:false}
         },
+
+        registerIsLoading:false
     },
 
     effects:{
         //Query the LoginStatus(Login Check is Performed by Backend APIs)
         *queryLoginStatus({payload:pld}, {call,put}){
+            yield put({type:'changeLoginButtonType', payload:"loading"});
+
             const {username, password, rememberme} = pld;
 
             const loginResponse = yield call(request,
@@ -49,14 +57,19 @@ export default {
             // if(loginStatus.result === 'Success'){
             //     yield put(push('/EMS/homepage')); //An effecient way to deal with redirect with ajax result
             // }else{
-                yield put({type:'changeLoginStatus', payload:loginResponse.data.result});
-                if(loginResponse.headers.hasOwnProperty('X-Authorization')){
-                    yield put({type:'changeToken', payload:loginResponse.headers['X-Authorization']})
-                }
+            yield put({type:'changeLoginButtonType', payload:"home"});
+
+            yield put({type:'changeLoginStatus', payload:loginResponse.data.result});
+
+            if(loginResponse.headers.hasOwnProperty('X-Authorization')){
+                yield put({type:'changeToken', payload:loginResponse.headers['X-Authorization']})
+            }
             // }
         },
 
         *insertNewAccount({payload:pld},{call,put}){
+            yield put({type:'changeRegisterButtonStatus'});
+
             const {email,username,password} = pld;
             const registerResponse = yield call(request,
                 'POST',
@@ -64,6 +77,7 @@ export default {
                 {headers:api_header,
                 data:qs.stringify({email,username,password})});
 
+            yield put({type:'changeRegisterButtonStatus'});
             yield put({type:'changeRegisterStatus', payload:registerResponse});
         }
     },
@@ -88,6 +102,7 @@ export default {
                     default:
                         draft.loginStatus = 'Unknown Error';
                 }
+                
                 return draft;
             })
         },
@@ -98,6 +113,13 @@ export default {
                     draft.loginStatus = '';
                 }
                 draft.loginData[pld.name] = pld.value;
+                return draft;
+            })
+        },
+
+        changeLoginButtonType(state,{payload:pld}){
+            return produce(state,(draft)=>{
+                draft.loginButtonType = pld;
                 return draft;
             })
         },
@@ -122,12 +144,15 @@ export default {
                     isSubmitDisabled: true,
                     formErrors:{email:'',username: '',password: ''},
                     formIsFirst:{email:true,username: true,password: true},
-                    formValidity:{email:false,username: false,password:false}
+                    formValidity:{email:false,username: false,password:false},
+                    isOnFocus: {email:false,username:false,password:false}
                 }
                 draft.registerStatus = '';
+                draft.registerIsLoading = false;
                 return draft;
             })
         },
+        
 
         changeRegister(state,{payload:pld}){
             return produce(state,(draft)=>{
@@ -201,6 +226,36 @@ export default {
             })
         },
 
+        clearRegisterEmail(state){
+            return produce(state, draft=>{
+                draft.registerData.email = '';
+                draft.registerData.formErrors.email = '';
+                draft.registerData.formIsFirst.email = true;
+                draft.registerData.formValidity.email = false;
+                return draft;
+            })
+        },
+
+        clearRegisterUsername(state){
+            return produce(state, draft=>{
+                draft.registerData.username = '';
+                draft.registerData.formErrors.username = '';
+                draft.registerData.formIsFirst.username = true;
+                draft.registerData.formValidity.username = false;
+                return draft;
+            })
+        },
+
+        clearRegisterPassword(state){
+            return produce(state, draft=>{
+                draft.registerData.password = '';
+                draft.registerData.formErrors.password = '';
+                draft.registerData.formIsFirst.password = true;
+                draft.registerData.formValidity.password = false;
+                return draft;
+            })
+        },
+
         changeRegisterStatus(state,{payload:response}){
             const {data, headers} = response;
             const {result, email, username, password} = data;
@@ -208,11 +263,29 @@ export default {
                 draft.registerStatus = result;
                 if(result === 'error'){
                     draft.registerData.formErrors = {email,username,password}
+                    if(email !== undefined){draft.registerData.formValidity.email = false;}
+                    if(username !== undefined){draft.registerData.formValidity.username = false;}
+                    if(password !== undefined){draft.registerData.formValidity.password = false;}
                 }else if(headers.hasOwnProperty('X-Authorization')){
                     draft.token = headers['X-Authorization'];
                 }
                 return draft;
             });
         },
+        
+        changeRegisterButtonStatus(state){
+            return produce(state,(draft)=>{
+                draft.registerIsLoading = ! draft.registerIsLoading;
+                return draft;
+            })
+        },
+
+        changeFocusState(state,{payload:pld}){
+            const {name, value} = pld;
+            return produce(state,(draft)=>{
+                draft.registerData.isOnFocus[name] = value;
+                return draft;
+            })
+        }
     }
 }

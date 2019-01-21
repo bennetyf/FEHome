@@ -56,12 +56,12 @@ export default ()=>(
                     </a>
                     <a href="https://github.com/bennetyf" target="_blank">
                     <div className={style.entry}>
-                        <Fa icon="github" size="lg" className={style.icon}/>
+                        <Fa icon="github" size="lg" style={{marginTop:`0.2rem`}}/>
                         <div className="ml-3">GitHub</div>
                     </div>
                     </a>
                     <div className={style.social_media}>
-                        <div className="mr-3">Social Media:</div>
+                        <span className="mr-3">Social Media:</span>
                         <a href="https://www.facebook.com/profile.php?id=100006874840870" target="_blank"><Fa icon="facebook-square" size="lg" className={style.icon}/></a>
                         <a href="https://www.linkedin.com/in/feng-yuan-10ba2b75/" target="_blank"><Fa icon="linkedin-square" size="lg" className={style.icon}/></a>
                         <a href="https://twitter.com/Bennet15614634" target="_blank"><Fa icon="twitter-square" size="lg" className={style.icon}/></a>

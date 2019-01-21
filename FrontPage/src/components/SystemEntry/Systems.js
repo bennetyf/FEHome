@@ -20,7 +20,7 @@ export default class allSystems extends React.PureComponent{
                         </div>
                         <div className={style.rings}>
                             <Ring systemName={"Employee Management System"}>
-                                <MDBBtn href="/EMS/login" size="lg" color="warning">
+                                <MDBBtn href="/EMS/Home" size="lg" color="warning">
                                     <span>Learn More</span>
                                 </MDBBtn>
                             </Ring>

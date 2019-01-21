@@ -14,11 +14,13 @@ const mapStateToProps = (state) => {
         loginStatus: allState.loginStatus,
         login:{
             ...allState.loginData,
+            buttontype:allState.loginButtonType
         },
 
         registerStatus: allState.registerStatus,
         register:{
-            ...allState.registerData
+            ...allState.registerData,
+            loadingStatus:allState.registerIsLoading
         }
     }
 };
@@ -44,12 +46,17 @@ const mapDispatchToProps = (dispatch) => {
                 }
             })
         },
+
+        loginHandleButtonPush:()=>{
+            dispatch({type:`${namespace}/changeLoginButtonType`})
+        },
+
         registerHandleToggle:()=>{
             dispatch({
                 type:`${namespace}/toggleRegister`
             })
         },
-        
+
         registerHandleChange: (evt)=>{
             let payload = {
                 name: evt.target.name,
@@ -70,7 +77,19 @@ const mapDispatchToProps = (dispatch) => {
                 type: `${namespace}/canSubmitRegister`
             })
         },
-        
+
+        registerClearEmail:()=>{
+            dispatch({type:`${namespace}/clearRegisterEmail`})
+        },
+
+        registerClearUsername:()=>{
+            dispatch({type:`${namespace}/clearRegisterUsername`})
+        },
+
+        registerClearPassword:()=>{
+            dispatch({type:`${namespace}/clearRegisterPassword`})
+        },
+
         registerHandleSubmit: (registerData) => {
             dispatch({
                 type:`${namespace}/insertNewAccount`,
@@ -85,7 +104,13 @@ const mapDispatchToProps = (dispatch) => {
         responseHandleError:()=>{
             dispatch({
                 type:`${namespace}/responseError`,
+            })
+        },
 
+        registerHandleFocusState:(evt,status)=>{
+            dispatch({
+                type: `${namespace}/changeFocusState`,
+                payload: {name:evt.target.name,value:status}
             })
         }
     }
